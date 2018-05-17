@@ -27,8 +27,8 @@ app.get('/todos', (req, res) => {
     res.send({todos})
   }, (error) => {
     res.status(400).send(error)
-  })
-})
+  });
+});
 
 app.listen(3000, () => {
   console.log('Started on port 3000');
