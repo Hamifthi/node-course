@@ -16,6 +16,7 @@ const port = process.env.Port || 3000;
 
 app.use(bodyParser.json());
 
+// POST /todos
 app.post('/todos', (req, res) => {
   let todo = new Todo({
     text: req.body.text
@@ -29,6 +30,8 @@ app.post('/todos', (req, res) => {
   });
 });
 
+// POST /users
+
 app.post('/users', (req, res) => {
   let body = _.pick(req.body, ['email', 'password']);
   let user = new User(body)
@@ -40,6 +43,20 @@ app.post('/users', (req, res) => {
     res.header('x-auth', token).send(user);
   }).catch((error) => {
     res.status(400).send(error);
+  })
+});
+
+// POST /users/login {email, password}
+
+app.post('/users/login', (req, res) => {
+  let body = _.pick(req.body, ['email', 'password']);
+  
+  User.findByCredentials(body.email, body.password).then((user) => {
+    return user.generateAuthToken().then((token) => {
+      res.header('x-auth', token).send(user);
+    })
+  }).catch ((error) => {
+    res.status(400).send();
   })
 });
 
