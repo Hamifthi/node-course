@@ -8,7 +8,7 @@ const _ = require('lodash')
 const mongoose = require('./db/mongoose');
 const Todo = require('./models/todo');
 const User = require('./models/user');
-let {authenticate} = require('./middleware/authenticate')
+let authenticate = require('./middleware/authenticate')
 
 
 let app = express();
